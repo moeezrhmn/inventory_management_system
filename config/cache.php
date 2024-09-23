@@ -54,6 +54,7 @@ return [
             'path' => storage_path('framework/cache/data'),
         ],
 
+
         'memcached' => [
             'driver' => 'memcached',
             'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),
@@ -91,8 +92,12 @@ return [
         'octane' => [
             'driver' => 'octane',
         ],
-
+        'filegit' => [
+            'driver' => 'file',
+            'path' => storage_path('framework/cache/filegit'),
+        ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -105,6 +110,6 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache_'),
+    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_cache_'),
 
 ];
