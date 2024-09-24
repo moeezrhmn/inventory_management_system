@@ -33,9 +33,14 @@ class LabourController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+        ]);
+        
         Labour::create([
             "name" => $request->name,
-            "email" => $request->email,
+            "address" => $request->address,
             "phone" => $request->phone,
         ]);
 
@@ -56,21 +61,22 @@ class LabourController extends Controller
 
     public function edit(Labour $labour)
     {
-        return view('labours.edit', [
+       return view('labours.edit', [
             'labour' => $labour
         ]);
     }
 
-    public function update(UpdateLabourRequest $request, Labour $labour)
+    public function update(Request $request, Labour $labour)
     {
         $labour->update([
-            "name" => $request->name,
-            "email" => Str::slug($request->name)
+            'name' => $request->name,
+            'address' => $request->address,
+            'phone' => $request->phone,
         ]);
 
         return redirect()
-            ->route('labours.index')
-            ->with('success', 'Labour has been updated!');
+        ->route('labours.index')
+        ->with('success', 'Labour has been updated!');
     }
 
     public function destroy(Labour $labour)
@@ -80,5 +86,10 @@ class LabourController extends Controller
         return redirect()
             ->route('labours.index')
             ->with('success', 'Labour has been deleted!');
+    }
+
+    function labourWork(){
+        $labours = Labour::all();
+        return view('labours.labour_work',compact('labours'));        
     }
 }

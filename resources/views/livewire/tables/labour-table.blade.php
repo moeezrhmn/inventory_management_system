@@ -42,7 +42,7 @@
             <thead class="thead-light">
                 <tr>
                     <th class="align-middle text-center w-1">
-                        {{ __('ID') }}
+                        {{ __('#No') }}
                     </th>
                     <th scope="col" class="align-middle text-center">
                         <a wire:click.prevent="sortBy('name')" href="#" role="button">
@@ -50,19 +50,42 @@
                             @include('inclues._sort-icon', ['field' => 'name'])
                         </a>
                     </th>
-
+                    <th scope="col" class="align-middle text-center">
+                        <a wire:click.prevent="sortBy('phone')" href="#" role="button">
+                            {{ __('Phone') }}
+                            @include('inclues._sort-icon', ['field' => 'phone'])
+                        </a>
+                    </th>
+                    <th scope="col" class="align-middle text-center">
+                        <a wire:click.prevent="sortBy('address')" href="#" role="button">
+                            {{ __('Address') }}
+                            @include('inclues._sort-icon', ['field' => 'address'])
+                        </a>
+                    </th>
+                    <th>
+                        Action
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($labours as $labour)
                 <tr>
                     <td class="align-middle text-center" style="width: 10%">
-                        {{ $loop->index }}
+                        {{ $loop->index+1 }}
                     </td>
                     <td class="align-middle text-center">
                         {{ $labour->name }}
                     </td>
-
+                    <td class="align-middle text-center">
+                        {{ $labour->phone }}
+                    </td>
+                    <td class="align-middle text-center">
+                        {{ $labour->address }}
+                    </td>
+                    <td class="align-middle text-center" style="width: 15%">
+                        <x-button.edit class="btn-icon" route="{{ route('labours.edit', $labour) }}" />
+                        <x-button.delete class="btn-icon" route="{{ route('labours.destroy', $labour) }}" />
+                    </td>
                 </tr>
                 @empty
                 <tr>

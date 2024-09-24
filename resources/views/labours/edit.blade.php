@@ -7,15 +7,15 @@
             <div class="card-header">
                 <div>
                     <h3 class="card-title">
-                        {{ __('Edit Category') }}
+                        {{ __('Edit Labour') }}
                     </h3>
                 </div>
 
                 <div class="card-actions">
-                    <x-action.close route="{{ route('categories.index') }}" />
+                    <x-action.close route="{{ route('labours.index') }}" />
                 </div>
             </div>
-            <form action="{{ route('categories.update', $category->slug) }}" method="POST">
+            <form action="{{ route('labours.update', $labour->id) }}" method="POST">
                 @csrf
                 @method('put')
                 <div class="card-body">
@@ -23,10 +23,23 @@
                         label="{{ __('Name') }}"
                         id="name"
                         name="name"
-                        :value="old('name', $category->name)"
-                        required
-                    />
+                        :value="old('name', $labour->name)"
+                        required />
+
+                    <x-input
+                        label="{{ __('Phone') }}"
+                        id="Phone"
+                        name="phone"
+                        :value="old('Phone', $labour->phone)"
+                        required />
+                    <x-input
+                        label="{{ __('Address') }}"
+                        id="address"
+                        name="address"
+                        :value="old('address', $labour->address)"
+                        required />
                 </div>
+
                 <div class="card-footer text-end">
                     <x-button type="submit">
                         {{ __('Update') }}
@@ -45,7 +58,7 @@
     const slug = document.querySelector("#slug");
     title.addEventListener("keyup", function() {
         let preslug = title.value;
-        preslug = preslug.replace(/ /g,"-");
+        preslug = preslug.replace(/ /g, "-");
         slug.value = preslug.toLowerCase();
     });
 </script>

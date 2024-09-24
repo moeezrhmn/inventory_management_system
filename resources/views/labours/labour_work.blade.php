@@ -1,7 +1,7 @@
 @extends('layouts.tabler')
 @section('content')
 <div class="page-body">
-    <div class="container-xl">
+    <div class="container">
         @if ($errors->any())
         <div class="alert alert-danger alert-dismissible" role="alert">
             <h3 class="mb-1">Error</h3>
@@ -17,19 +17,27 @@
             <div class="card-header">
                 <div>
                     <h3 class="card-title">
-                        {{ __('Create Labour') }}
+                        {{ __('Labour Work') }}
                     </h3>
                 </div>
                 <div class="card-actions">
                     <x-action.close route="{{ route('labours.index') }}" />
                 </div>
             </div>
-            <form method="POST" action="{{ route('labours.store') }}">
+            <form method="POST" action="{{ route('labours.addwork') }}">
                 @csrf
                 <div class="card-body">
-                    <livewire:name />
-                    <livewire:email />
-                    <livewire:phone />
+                    <div class="mb-3">
+                        <label for="name" class="form-label">
+                            {{ __('Labours') }}
+                        </label>
+                        <select class="form-control" name="labourID">
+                            <option value="">Select Labour</option>
+                            @foreach($labours as $labour)
+                            <option value="{{$labour->id}}">{{$labour->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="card-footer text-end">
                     <x-button type="submit">

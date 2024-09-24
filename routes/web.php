@@ -65,6 +65,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/labours', LabourController::class);
     Route::resource('/units', UnitController::class);
 
+    Route::get('/labourwork', [LabourController::class, 'labourWork'])->name('labours.work');
+    Route::post('/addwork', [LabourController::class, 'addWork'])->name('labours.addwork');
+
+
     // Route Products
     Route::get('products/import/', [ProductImportController::class, 'create'])->name('products.import.view');
     Route::post('products/import/', [ProductImportController::class, 'store'])->name('products.import.store');

@@ -11,7 +11,7 @@ class Labour extends Model
 
     protected $fillable = [
         'name',
-        'email',
+        'address',
         'phone'
     ];
 }

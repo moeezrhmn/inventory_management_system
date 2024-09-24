@@ -80,41 +80,41 @@
                                 </svg>
 
                                 @if (auth()->user()->unreadNotifications->count() !== 0)
-                                    <span class="badge bg-red"></span>
+                                <span class="badge bg-red"></span>
                                 @endif
                             </a>
                             <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
 
-                                {{--                                    <div class="card"> --}}
-                                {{--                                        <div class="card-header"> --}}
-                                {{--                                            <h3 class="card-title">Last updates</h3> --}}
-                                {{--                                        </div> --}}
-                                {{--                                        <div class="list-group list-group-flush list-group-hoverable"> --}}
+                                {{-- <div class="card"> --}}
+                                {{-- <div class="card-header"> --}}
+                                {{-- <h3 class="card-title">Last updates</h3> --}}
+                                {{-- </div> --}}
+                                {{-- <div class="list-group list-group-flush list-group-hoverable"> --}}
 
-                                {{--                                            @foreach (auth()->user()->unreadNotifications as $notification) --}}
-                                {{--                                                <a href="#" class="text-success"> --}}
-                                {{--                                                    <li class="p-1 text-success"> {{$notification->data['data']}}</li> --}}
-                                {{--                                                </a> --}}
-                                {{--                                                <div class="list-group-item"> --}}
-                                {{--                                                    <div class="row align-items-center"> --}}
-                                {{--                                                        <div class="col-auto"><span class="status-dot status-dot-animated bg-red d-block"></span></div> --}}
-                                {{--                                                        <div class="col text-truncate"> --}}
-                                {{--                                                            <a href="#" class="text-body d-block">Example 1</a> --}}
-                                {{--                                                            <div class="d-block text-muted text-truncate mt-n1"> --}}
-                                {{--                                                                Change deprecated html tags to text decoration classes (#29604) --}}
-                                {{--                                                            </div> --}}
-                                {{--                                                        </div> --}}
-                                {{--                                                        <div class="col-auto"> --}}
-                                {{--                                                            <a href="#" class="list-group-item-actions"> --}}
-                                {{--                                                                <!-- Download SVG icon from http://tabler-icons.io/i/star --> --}}
-                                {{--                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg> --}}
-                                {{--                                                            </a> --}}
-                                {{--                                                        </div> --}}
-                                {{--                                                    </div> --}}
-                                {{--                                                </div> --}}
-                                {{--                                            @endforeach --}}
-                                {{--                                        </div> --}}
-                                {{--                                    </div> --}}
+                                {{-- @foreach (auth()->user()->unreadNotifications as $notification) --}}
+                                {{-- <a href="#" class="text-success"> --}}
+                                {{-- <li class="p-1 text-success"> {{$notification->data['data']}}</li> --}}
+                                {{-- </a> --}}
+                                {{-- <div class="list-group-item"> --}}
+                                {{-- <div class="row align-items-center"> --}}
+                                {{-- <div class="col-auto"><span class="status-dot status-dot-animated bg-red d-block"></span></div> --}}
+                                {{-- <div class="col text-truncate"> --}}
+                                {{-- <a href="#" class="text-body d-block">Example 1</a> --}}
+                                {{-- <div class="d-block text-muted text-truncate mt-n1"> --}}
+                                {{-- Change deprecated html tags to text decoration classes (#29604) --}}
+                                {{-- </div> --}}
+                                {{-- </div> --}}
+                                {{-- <div class="col-auto"> --}}
+                                {{-- <a href="#" class="list-group-item-actions"> --}}
+                                {{-- <!-- Download SVG icon from http://tabler-icons.io/i/star --> --}}
+                                {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg> --}}
+                                {{-- </a> --}}
+                                {{-- </div> --}}
+                                {{-- </div> --}}
+                                {{-- </div> --}}
+                                {{-- @endforeach --}}
+                                {{-- </div> --}}
+                                {{-- </div> --}}
                                 <span class="dropdown-header">Dropdown header</span>
                                 <a class="dropdown-item" href="#">
                                     Action
@@ -151,7 +151,7 @@
 
                             <div class="d-none d-xl-block ps-2">
                                 <div>{{ Auth::user()->name }}</div>
-                                {{--                                    <div class="mt-1 small text-muted">UI Designer</div> --}}
+                                {{-- <div class="mt-1 small text-muted">UI Designer</div> --}}
                             </div>
                         </a>
                         <div class="dropdown-menu">
@@ -408,6 +408,9 @@
                                             <a class="dropdown-item" href="{{ route('customers.index') }}">
                                                 {{ __('Customers') }}
                                             </a>
+                                            <a class="dropdown-item" href="{{ route('labours.index') }}">
+                                                {{ __('Labours') }}
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -438,13 +441,16 @@
                                     <div class="dropdown-menu-columns">
                                         <div class="dropdown-menu-column">
                                             {{-- <a class="dropdown-item" href="{{ route('users.index') }}">
-                                                    {{ __('Users') }}
-                                                </a> --}}
+                                            {{ __('Users') }}
+                                            </a> --}}
                                             <a class="dropdown-item" href="{{ route('categories.index') }}">
                                                 {{ __('Categories') }}
                                             </a>
                                             <a class="dropdown-item" href="{{ route('units.index') }}">
                                                 {{ __('Units') }}
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('labours.work') }}">
+                                                {{ __('Labour Work') }}
                                             </a>
                                         </div>
                                     </div>
