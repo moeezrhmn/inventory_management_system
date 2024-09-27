@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name') }}</title>
-
+    @vite("resources/css/app.css")
     <!-- CSS files -->
     <link href="{{ asset('dist/css/tabler.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('dist/css/tabler-flags.min.css') }}" rel="stylesheet" />
@@ -538,7 +538,50 @@
 
     <!-- Libs JS -->
     @stack('page-libraries')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(document).on("click", ".delete-labourwork", function (e) {
+                e.preventDefault();
+                var workId = $(this).data("id");
+                var deleteUrl = "/labour-works/" + workId;
+                if (confirm("Are you sure you want to delete this work?")) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: "DELETE",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                $("#labourWorkRow-" + workId).remove();
+                                alert(response.success);
+                            } else {
+                                alert("Something went wrong. Please try again.");
+                            }
+                        },
+                        error: function (xhr) {
+                            alert("Failed to delete. Please try again.");
+                        },
+                    });
+                }
+            });
+            $('#search-invoice').on('keyup', function() {
+                var query = $(this).val();
+
+                $.ajax({
+                    url: "{{ route('labourwork.search') }}",
+                    type: 'GET',
+                    data: { query: query },
+                    success: function(response) {
+                        $('tbody').html(response.html);
+                    }
+                });
+            });
+        });
+    </script>
     <!-- Tabler Core -->
+    <script src="{{ asset('assets/js/scripts.js') }}" defer></script>
     <script src="{{ asset('dist/js/tabler.min.js') }}" defer></script>
     <script src="{{ asset('dist/js/demo.min.js') }}" defer></script>
     {{-- - Page Scripts - --}}

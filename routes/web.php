@@ -67,6 +67,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/labourwork', [LabourController::class, 'labourWork'])->name('labours.work');
     Route::post('/addwork', [LabourController::class, 'addWork'])->name('labours.addwork');
+    Route::get('/labour-work/{id}/edit_work', [LabourController::class, 'edit_work'])->name('labourwork.edit');
+    Route::put('/labour-work/{id}', [LabourController::class, 'update_work'])->name('labourwork.update');
+    Route::delete('/labour-works/{id}', [LabourController::class, 'destroy_work'])->name('labourwork.destroy');
+    Route::get('/labourwork/search', [LabourController::class, 'search'])->name('labourwork.search');
+
 
 
     // Route Products

@@ -105,7 +105,6 @@ class OrderController extends Controller
     {
         $order = Order::where('uuid', $uuid)->firstOrFail();
         // TODO refactoring
-
         // Reduce the stock
         $products = OrderDetails::where('order_id', $order->id)->get();
 

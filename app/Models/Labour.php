@@ -14,4 +14,9 @@ class Labour extends Model
         'address',
         'phone'
     ];
+
+    public function labourWorks()
+    {
+        return $this->hasMany(LabourWork::class);
+    }
 }

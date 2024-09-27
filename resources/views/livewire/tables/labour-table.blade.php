@@ -83,6 +83,7 @@
                         {{ $labour->address }}
                     </td>
                     <td class="align-middle text-center" style="width: 15%">
+                        <x-button.show class="btn-icon" route="{{ route('labours.show', $labour) }}" />
                         <x-button.edit class="btn-icon" route="{{ route('labours.edit', $labour) }}" />
                         <x-button.delete class="btn-icon" route="{{ route('labours.destroy', $labour) }}" />
                     </td>

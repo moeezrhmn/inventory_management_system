@@ -3,9 +3,13 @@
     * Copyright 2013-2022 Start Bootstrap
     * Licensed under SEE_LICENSE (https://github.com/StartBootstrap/sb-admin-pro/blob/master/LICENSE)
     */
-    window.addEventListener('DOMContentLoaded', event => {
+
+
+window.addEventListener('DOMContentLoaded', event => {
     // Activate feather
     feather.replace();
+
+    console.log("workng");
 
     // Enable tooltips globally
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -83,3 +87,4 @@
         targetAnchor.classList.add('active');
     });
 });
+

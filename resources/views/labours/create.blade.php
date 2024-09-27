@@ -28,8 +28,11 @@
                 @csrf
                 <div class="card-body">
                     <livewire:name />
-                    <livewire:email />
                     <livewire:phone />
+                    <x-input
+                        label="{{ __('Address') }}"
+                        id="address"
+                        name="address"/>
                 </div>
                 <div class="card-footer text-end">
                     <x-button type="submit">
