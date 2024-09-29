@@ -16,8 +16,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Purchase\PurchaseController;
 use App\Http\Controllers\Quotation\QuotationController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\LabourController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -62,8 +64,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/customers', CustomerController::class);
     Route::resource('/suppliers', SupplierController::class);
     Route::resource('/categories', CategoryController::class);
+    Route::resource('/labours', LabourController::class);
+    Route::resource('/warehouses', WarehouseController::class);
     Route::resource('/units', UnitController::class);
 
+    Route::get('/labourwork', [LabourController::class, 'labourWork'])->name('labours.work');
+    Route::post('/addwork', [LabourController::class, 'addWork'])->name('labours.addwork');
+    Route::get('/labour-work/{id}/edit_work', [LabourController::class, 'edit_work'])->name('labourwork.edit');
+    Route::put('/labour-work/{id}', [LabourController::class, 'update_work'])->name('labourwork.update');
+    Route::delete('/labour-works/{id}', [LabourController::class, 'destroy_work'])->name('labourwork.destroy');
+    Route::get('/labourwork/search', [LabourController::class, 'search'])->name('labourwork.search');
+
+    Route::get('/w-detail-create/{warehouse_id}/create', [WarehouseController::class, 'wcreate'])->name('w_create');
+    Route::get('/w-detail-edit/{id}/edit_detail', [WarehouseController::class, 'wedit'])->name('w_edit');
+    Route::post('/w-detail-store', [WarehouseController::class, 'wstore'])->name('w_store');
+    Route::put('/w-detail-update/{id}', [WarehouseController::class, 'wupdate'])->name('w_update');
+    Route::delete('/w-detail-delete/{id}', [WarehouseController::class, 'wdestroy'])->name('w-destroy');
+    Route::get('/warehouse/search', [WarehouseController::class, 'wsearch'])->name('warehouse.search');
     // Route Products
     Route::get('products/import/', [ProductImportController::class, 'create'])->name('products.import.view');
     Route::post('products/import/', [ProductImportController::class, 'store'])->name('products.import.store');
