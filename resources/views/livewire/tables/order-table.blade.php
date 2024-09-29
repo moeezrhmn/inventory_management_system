@@ -64,7 +64,13 @@
                     </th>
                     <th scope="col" class="align-middle text-center">
                         <a wire:click.prevent="sortBy('payment_type')" href="#" role="button">
-                            {{ __('Paymet') }}
+                            {{ __('Payment') }}
+                            @include('inclues._sort-icon', ['field' => 'payment_type'])
+                        </a>
+                    </th>
+                    <th scope="col" class="align-middle text-center">
+                        <a wire:click.prevent="sortBy('payment_type')" href="#" role="button">
+                            {{ __('Paid') }}
                             @include('inclues._sort-icon', ['field' => 'payment_type'])
                         </a>
                     </th>
@@ -104,7 +110,10 @@
                             {{ $order->payment_type }}
                         </td>
                         <td class="align-middle text-center">
-                            {{ Number::currency($order->total, 'EUR') }}
+                            {{ Number::currency($order->pay, 'PKR') }}
+                        </td>
+                        <td class="align-middle text-center">
+                            {{ Number::currency($order->total, 'PKR') }}
                         </td>
                         <td class="align-middle text-center">
                             <x-status dot

@@ -34,8 +34,7 @@ class OrderTable extends Component
     public function render()
     {
         return view('livewire.tables.order-table', [
-            'orders' => Order::where("user_id",auth()->id())
-                ->with(['customer', 'details'])
+            'orders' => Order::with(['customer', 'details'])
                 ->search($this->search)
                 ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                 ->paginate($this->perPage)

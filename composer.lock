@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2afde9420286195589f6638d25f722a6",
+    "content-hash": "0b86f44730cc2c03383d0f624183234e",
     "packages": [
         {
             "name": "anayarojo/shoppingcart",
@@ -1860,6 +1860,67 @@
                 }
             ],
             "time": "2022-05-21T17:30:32+00:00"
+        },
+        {
+            "name": "kyslik/column-sortable",
+            "version": "6.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kyslik/column-sortable.git",
+                "reference": "0f753dfd34338e87a8964a3fb2cd10fa86174b3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kyslik/column-sortable/zipball/0f753dfd34338e87a8964a3fb2cd10fa86174b3c",
+                "reference": "0f753dfd34338e87a8964a3fb2cd10fa86174b3c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "illuminate/support": "5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^5.0|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^8.5|^9.5.10|^10.5"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kyslik\\ColumnSortable\\ColumnSortableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kyslik\\ColumnSortable\\": "src/ColumnSortable/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Kiesel",
+                    "email": "martin.kiesel@gmail.com",
+                    "role": "Developer and maintainer"
+                }
+            ],
+            "description": "Package for handling column sorting in Laravel 6.x",
+            "keywords": [
+                "column",
+                "laravel",
+                "sort",
+                "sortable",
+                "sorting"
+            ],
+            "support": {
+                "issues": "https://github.com/Kyslik/column-sortable/issues",
+                "source": "https://github.com/Kyslik/column-sortable/tree/6.6.0"
+            },
+            "time": "2024-03-14T08:22:23+00:00"
         },
         {
             "name": "laravel/framework",
@@ -4794,6 +4855,88 @@
             "time": "2023-11-19T01:25:49+00:00"
         },
         {
+            "name": "spatie/laravel-permission",
+            "version": "6.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-permission.git",
+                "reference": "fe973a58b44380d0e8620107259b7bda22f70408"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/fe973a58b44380d0e8620107259b7bda22f70408",
+                "reference": "fe973a58b44380d0e8620107259b7bda22f70408",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/auth": "^8.12|^9.0|^10.0|^11.0",
+                "illuminate/container": "^8.12|^9.0|^10.0|^11.0",
+                "illuminate/contracts": "^8.12|^9.0|^10.0|^11.0",
+                "illuminate/database": "^8.12|^9.0|^10.0|^11.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "laravel/passport": "^11.0|^12.0",
+                "orchestra/testbench": "^6.23|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^9.4|^10.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "6.x-dev",
+                    "dev-master": "6.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Permission\\PermissionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Spatie\\Permission\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Permission handling for Laravel 8.0 and up",
+            "homepage": "https://github.com/spatie/laravel-permission",
+            "keywords": [
+                "acl",
+                "laravel",
+                "permission",
+                "permissions",
+                "rbac",
+                "roles",
+                "security",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-permission/issues",
+                "source": "https://github.com/spatie/laravel-permission/tree/6.9.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-06-22T23:04:52+00:00"
+        },
+        {
             "name": "symfony/console",
             "version": "v6.4.0",
             "source": {
@@ -7588,67 +7731,6 @@
             "time": "2020-07-09T08:09:16+00:00"
         },
         {
-            "name": "kyslik/column-sortable",
-            "version": "6.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Kyslik/column-sortable.git",
-                "reference": "80a7f053cf8e457be06d5fe59371f1b2b5cd8d03"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Kyslik/column-sortable/zipball/80a7f053cf8e457be06d5fe59371f1b2b5cd8d03",
-                "reference": "80a7f053cf8e457be06d5fe59371f1b2b5cd8d03",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/support": "5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-                "php": ">=7.2"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^5.0|^7.0|^8.0",
-                "phpunit/phpunit": "^8.5|^9.5.10"
-            },
-            "type": "package",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Kyslik\\ColumnSortable\\ColumnSortableServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Kyslik\\ColumnSortable\\": "src/ColumnSortable/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Martin Kiesel",
-                    "email": "martin.kiesel@gmail.com",
-                    "role": "Developer and maintainer"
-                }
-            ],
-            "description": "Package for handling column sorting in Laravel 6.x",
-            "keywords": [
-                "column",
-                "laravel",
-                "sort",
-                "sortable",
-                "sorting"
-            ],
-            "support": {
-                "issues": "https://github.com/Kyslik/column-sortable/issues",
-                "source": "https://github.com/Kyslik/column-sortable/tree/6.5.0"
-            },
-            "time": "2023-02-17T09:46:34+00:00"
-        },
-        {
             "name": "laravel/breeze",
             "version": "v1.26.2",
             "source": {
@@ -10033,5 +10115,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

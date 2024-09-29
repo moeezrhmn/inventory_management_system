@@ -18,6 +18,7 @@ use App\Http\Controllers\Quotation\QuotationController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,7 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // User Management
     // Route::resource('/users', UserController::class); //->except(['show']);
-    Route::put('/user/change-password/{username}', [UserController::class, 'updatePassword'])->name('users.updatePassword');
+    Route::put('/user/change-password/{user_id}', [UserController::class, 'updatePassword'])->name('users.updatePassword');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('profile.settings');
@@ -85,6 +86,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
     Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store');
+
+    // Route Installments
+    Route::post('/orders/installements/add', [OrderController::class, 'order_installments_add'])->name('orders.installments.add');
 
     // SHOW ORDER
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
@@ -123,7 +127,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route::get('/quotations/{quotation}/edit', [QuotationController::class, 'edit'])->name('quotations.edit');
     Route::post('/quotations/complete/{quotation}', [QuotationController::class, 'update'])->name('quotations.update');
     Route::delete('/quotations/delete/{quotation}', [QuotationController::class, 'destroy'])->name('quotations.delete');
+
+    // Route User
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/show/{user_id}', [UserController::class, 'show'])->name('users.show');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::get('/users/edit/{user_id}', [UserController::class, 'edit'])->name('users.edit');
+    
+    Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
+    Route::put('/users/update/{user_id}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/destroy/{user_id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    // Route Permission 
+    Route::put('/users/permissions/update/{user_id}', [UserController::class, 'users_permissions_update'])->name('users.permissions.update');
 });
+
 
 require __DIR__.'/auth.php';
 

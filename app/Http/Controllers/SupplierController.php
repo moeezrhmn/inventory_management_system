@@ -11,7 +11,7 @@ class SupplierController extends Controller
 {
     public function index()
     {
-        $suppliers = Supplier::where("user_id", auth()->id())->count();
+        $suppliers = Supplier::count();
 
         return view('suppliers.index', [
             'suppliers' => $suppliers

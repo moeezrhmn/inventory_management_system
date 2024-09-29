@@ -34,7 +34,7 @@ class UserTable extends Component
     public function render()
     {
         return view('livewire.tables.user-table', [
-            'users' => User::query()
+            'users' => User::query()->with('permissions')
                 ->search($this->search)
                 ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                 ->paginate($this->perPage)

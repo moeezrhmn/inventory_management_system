@@ -11,7 +11,7 @@ class UnitController extends Controller
 {
     public function index()
     {
-        $units = Unit::where("user_id", auth()->id())->select(['id', 'name', 'slug', 'short_code'])
+        $units = Unit::select(['id', 'name', 'slug', 'short_code'])
             ->get();
 
         return view('units.index', [
@@ -56,7 +56,7 @@ class UnitController extends Controller
 
     public function update(UpdateUnitRequest $request, $slug)
     {
-        $unit = Unit::where(["user_id" => auth()->id(), "slug" => $slug])->firstOrFail();
+        $unit = Unit::where(["slug" => $slug])->firstOrFail();
         $unit->name = $request->name;
         $unit->slug = Str::slug($request->name);
         $unit->short_code = $request->short_code;

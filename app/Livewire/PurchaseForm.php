@@ -20,7 +20,7 @@ class PurchaseForm extends Component
 
     public function mount(): void
     {
-        $this->allProducts = Product::where("user_id",auth()->id())->get();
+        $this->allProducts = Product::get();
     }
 
     public function render(): View

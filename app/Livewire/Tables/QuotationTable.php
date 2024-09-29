@@ -34,8 +34,7 @@ class QuotationTable extends Component
     public function render()
     {
         return view('livewire.tables.quotation-table', [
-            'quotations' => Quotation::where("user_id",auth()->id())
-                ->with(['quotationDetails', 'customer'])
+            'quotations' => Quotation::with(['quotationDetails', 'customer'])
                 ->search($this->search)
                 ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                 ->paginate()

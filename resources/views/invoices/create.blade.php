@@ -156,7 +156,7 @@
                                             {{ __('Payment') }}
                                         </label>
 
-                                        <select class="form-control @error('payment_type') is-invalid @enderror" id="payment_type" name="payment_type">
+                                        <select class="form-control @error('payment_type') is-invalid @enderror" required id="payment_type" name="payment_type">
                                             <option selected="" disabled="">Select a payment:</option>
                                             <option value="HandCash">HandCash</option>
                                             <option value="Cheque">Cheque</option>

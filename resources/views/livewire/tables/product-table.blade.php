@@ -90,9 +90,11 @@
                             @include('inclues._sort-icon', ['field' => 'quantity'])
                         </a>
                     </th>
+                    @if(auth()->user()->can('see single products') || auth()->user()->can('change products'))
                     <th scope="col" class="align-middle text-center">
                         {{ __('Action') }}
                     </th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -118,12 +120,18 @@
                         <td class="align-middle text-center">
                             {{ $product->quantity }}
                         </td>
+                        @if(auth()->user()->can('see single products') || auth()->user()->can('change products'))
                         <td class="align-middle text-center" style="width: 10%">
+                            @if(auth()->user()->can('see single products'))
                             <x-button.show class="btn-icon" route="{{ route('products.show', $product->uuid) }}" />
+                            @endif
+                            @if(auth()->user()->can('change products'))
                             <x-button.edit class="btn-icon" route="{{ route('products.edit', $product->uuid) }}" />
                             <x-button.delete class="btn-icon" route="{{ route('products.destroy', $product->uuid) }}"
-                                onclick="return confirm('Are you sure to delete product {{ $product->name }} ?')" />
+                            onclick="return confirm('Are you sure to delete product {{ $product->name }} ?')" />
+                            @endif
                         </td>
+                        @endif
                     </tr>
                 @empty
                     <tr>

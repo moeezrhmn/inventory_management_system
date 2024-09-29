@@ -62,6 +62,12 @@
                     </a>
                 </th>
                 <th scope="col" class="align-middle text-center">
+                    <a wire:click.prevent="sortBy('email')" href="#" role="button">
+                        {{ __('Permissions') }}
+                        @include('inclues._sort-icon', ['field' => 'permission'])
+                    </a>
+                </th>
+                <th scope="col" class="align-middle text-center">
                     <a wire:click.prevent="sortBy('created_at')" href="#" role="button">
                         {{ __('Created at') }}
                         @include('inclues._sort-icon', ['field' => 'created_at'])
@@ -79,7 +85,7 @@
                         {{ $user->id }}
                     </td>
                     <td class="align-middle text-center d-none d-sm-table-cell">
-                        {{ $user->photo }}
+                        <img style="max-width: 100px;" src="{{ asset('storage/profile/' . $user->photo) }}" alt="User Photo">
                     </td>
                     <td class="align-middle text-center">
                         {{ $user->name }}
@@ -87,13 +93,18 @@
                     <td class="align-middle text-center">
                         {{ $user->email }}
                     </td>
+                    <td class="align-middle text-center " style="display: flex; flex-wrap: wrap; gap:5px;">
+                        @foreach($user->permissions as $permission)
+                            <span class="badge bg-cyan text-white "> {{ $permission['name'] }}</span>
+                        @endforeach
+                    </td>
                     <td class="align-middle text-center d-none d-sm-table-cell" style="width: 15%">
                         {{ $user->created_at->format('d-m-Y') }}
                     </td>
                     <td class="align-middle text-center" style="width: 15%">
-                        <x-button.show class="btn-icon" route="{{ route('users.show', $user) }}"/>
-                        <x-button.edit class="btn-icon" route="{{ route('users.edit', $user) }}"/>
-                        <x-button.delete class="btn-icon" route="{{ route('users.destroy', $user) }}"/>
+                        <x-button.show class="btn-icon" route="{{ route('users.show', $user->id) }}"/>
+                        <x-button.edit class="btn-icon" route="{{ route('users.edit', $user->id) }}"/>
+                        <x-button.delete class="btn-icon" route="{{ route('users.destroy', $user->id) }}"/>
                     </td>
                 </tr>
             @empty

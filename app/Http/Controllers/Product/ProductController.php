@@ -17,7 +17,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::where("user_id", auth()->id())->count();
+        $products = Product::count();
 
         return view('products.index', [
             'products' => $products,
@@ -26,15 +26,15 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
-        $categories = Category::where("user_id", auth()->id())->get(['id', 'name']);
-        $units = Unit::where("user_id", auth()->id())->get(['id', 'name']);
+        $categories = Category::get(['id', 'name']);
+        $units = Unit::get(['id', 'name']);
 
         if ($request->has('category')) {
-            $categories = Category::where("user_id", auth()->id())->whereSlug($request->get('category'))->get();
+            $categories = Category::whereSlug($request->get('category'))->get();
         }
 
         if ($request->has('unit')) {
-            $units = Unit::where("user_id", auth()->id())->whereSlug($request->get('unit'))->get();
+            $units = Unit::whereSlug($request->get('unit'))->get();
         }
 
         return view('products.create', [
@@ -99,8 +99,8 @@ class ProductController extends Controller
     {
         $product = Product::where("uuid", $uuid)->firstOrFail();
         return view('products.edit', [
-            'categories' => Category::where("user_id", auth()->id())->get(),
-            'units' => Unit::where("user_id", auth()->id())->get(),
+            'categories' => Category::get(),
+            'units' => Unit::get(),
             'product' => $product
         ]);
     }

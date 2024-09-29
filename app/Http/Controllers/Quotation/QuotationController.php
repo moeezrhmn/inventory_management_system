@@ -18,7 +18,7 @@ class QuotationController extends Controller
 {
     public function index()
     {
-        $quotations = Quotation::where("user_id",auth()->id())->count();
+        $quotations = Quotation::count();
 
         return view('quotations.index', [
             'quotations' => $quotations
@@ -31,8 +31,8 @@ class QuotationController extends Controller
 
         return view('quotations.create', [
             'cart' => Cart::content('quotation'),
-            'products' => Product::where("user_id",auth()->id())->get(),
-            'customers' => Customer::where("user_id",auth()->id())->get(),
+            'products' => Product::get(),
+            'customers' => Customer::get(),
 
             // maybe?
             //'statuses' => QuotationStatus::cases()
@@ -92,7 +92,7 @@ class QuotationController extends Controller
 
     public function show($uuid)
     {
-        $quotation = Quotation::where("user_id",auth()->id())->where('uuid', $uuid)->firstOrFail();
+        $quotation = Quotation::where('uuid', $uuid)->firstOrFail();
 
         return view('quotations.show', [
             'quotation' => $quotation,
@@ -105,7 +105,7 @@ class QuotationController extends Controller
         $quotation->update([
             "status" => 2
         ]);
-        $quotations = Quotation::where("user_id",auth()->id())->count();
+        $quotations = Quotation::count();
 
         return redirect()
             ->route('quotations.index', [
@@ -116,7 +116,7 @@ class QuotationController extends Controller
     // complete quotaion method
     public function update(Request $request,$uuid)
     {
-        $quotation = Quotation::where("user_id",auth()->id())->where('uuid', $uuid)->firstOrFail();
+        $quotation = Quotation::where('uuid', $uuid)->firstOrFail();
         $quotation->with(['customer', 'quotationDetails'])->get();
         $quotation->status = 1;
         // Reduce the stock
