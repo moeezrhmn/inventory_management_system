@@ -34,8 +34,11 @@
                             </label>
                             <select class="border border-[#FCFCFD] p-2 w-full" name="labourID">
                                 <option value="">Select Labour</option>
-                                <option value="2">Haseeb Zafar</option>
-                                <option value="4"></option>
+                                @foreach($labours as $labour)
+
+                                    <option value="{{$labour->id}}">{{$labour->name}}</option>
+                                
+                                @endforeach
                             </select>
                         </div>
                         <div class="mb-3 flex-1 w-full">
@@ -44,11 +47,11 @@
                             </label>
                             <select class="border border-[#FCFCFD] p-2 w-full" name="pID">
                                 <option value="">Select Product</option>
-                                <option value="1">iPhone 14 Pro</option>
-                                <option value="2">ASUS Laptop</option>
-                                <option value="3">Logitech Keyboard</option>
-                                <option value="4">Logitech Speakers</option>
-                                <option value="5">AutoCAD v7.0</option>
+                                @foreach($products as $product)
+
+                                    <option value="{{$product->id}}">{{$product->name}}</option>
+                                
+                                @endforeach
                             </select>
                         </div>
                     </div>
