@@ -53,4 +53,9 @@ class Unit extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function warehouseItems()
+    {
+        return $this->hasMany(WarehouseItem::class, 'unit_id');
+    }
 }

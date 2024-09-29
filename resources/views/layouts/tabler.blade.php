@@ -411,6 +411,9 @@
                                             <a class="dropdown-item" href="{{ route('labours.index') }}">
                                                 {{ __('Labours') }}
                                             </a>
+                                            <a class="dropdown-item" href="{{ route('warehouses.index') }}">
+                                                {{ __('Warehouses') }}
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -566,11 +569,75 @@
                     });
                 }
             });
+            $(document).on("click", ".delete-warehouse", function (e) {
+                e.preventDefault();
+                var warehouseId = $(this).data("id");
+                var deleteUrl = $(this).data("route"); // Corrected extra '='
+                
+                if (confirm("Are you sure you want to delete this warehouse?")) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: "DELETE",
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'), // CSRF token
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                $("#warehouse_row_" + warehouseId).remove();
+                                alert(response.success);
+                            } else {
+                                alert("Something went wrong. Please try again.");
+                            }
+                        },
+                        error: function (xhr) {
+                            alert("Failed to delete. Please try again.");
+                        },
+                    });
+                }
+            });
+            $(document).on("click", ".delete-w-detail", function (e) {
+                e.preventDefault();
+                var warehouseId = $(this).data("id");
+                var deleteUrl = $(this).data("route"); 
+                if (confirm("Are you sure you want to delete this warehouse detail?")) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: "DELETE",
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'), // CSRF token
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                $("#warehouse_item_" + warehouseId).remove();
+                                alert(response.success);
+                            } else {
+                                alert("Something went wrong. Please try again.");
+                            }
+                        },
+                        error: function (xhr) {
+                            alert("Failed to delete. Please try again.");
+                        },
+                    });
+                }
+            });
+
             $('#search-invoice').on('keyup', function() {
                 var query = $(this).val();
 
                 $.ajax({
                     url: "{{ route('labourwork.search') }}",
+                    type: 'GET',
+                    data: { query: query },
+                    success: function(response) {
+                        $('tbody').html(response.html);
+                    }
+                });
+            });
+            $('#search-detail').on('keyup', function() {
+                var query = $(this).val();
+
+                $.ajax({
+                    url: "{{ route('warehouse.search') }}",
                     type: 'GET',
                     data: { query: query },
                     success: function(response) {
