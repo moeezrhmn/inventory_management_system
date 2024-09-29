@@ -31,6 +31,7 @@
                     <x-table.th>{{ __('Actions') }}</x-table.th>
                 </x-slot:th>
                 <x-slot:tbody>
+                    <?php print_r($orders); ?>
                     @foreach ($orders as $order)
                         <tr>
                             <x-table.td>{{ $loop->iteration }}</x-table.td>
@@ -38,7 +39,7 @@
                             <x-table.td>{{ $order->customer->name }}</x-table.td>
                             <x-table.td>{{ $order->order_date->format('d-m-Y') }}</x-table.td>
                             <x-table.td>{{ $order->payment_type }}</x-table.td>
-                            <x-table.td>{{ Number::currency($order->total, 'EUR') }}</x-table.td>
+                            <x-table.td>{{ Number::currency($order->total, 'PKR') }}</x-table.td>
                             <x-table.td>
                                 <x-badge class="{{ $order->order_status === 'complete' ? 'bg-green' : 'bg-orange' }}">
                                     {{ $order->order_status }}

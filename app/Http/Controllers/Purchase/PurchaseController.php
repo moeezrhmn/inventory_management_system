@@ -25,7 +25,7 @@ class PurchaseController extends Controller
     public function index()
     {
         return view('purchases.index', [
-            'purchases' => Purchase::where('user_id',auth()->id())->count()
+            'purchases' => Purchase::count()
         ]);
     }
 
@@ -68,8 +68,8 @@ class PurchaseController extends Controller
     public function create()
     {
         return view('purchases.create', [
-            'categories' => Category::where('user_id',auth()->id())->select(['id', 'name'])->get(),
-            'suppliers' => Supplier::where('user_id',auth()->id())->select(['id', 'name'])->get(),
+            'categories' => Category::select(['id', 'name'])->get(),
+            'suppliers' => Supplier::select(['id', 'name'])->get(),
         ]);
     }
 

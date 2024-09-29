@@ -28,9 +28,10 @@
                         <div class="invoice-top">
                             <div class="row">
                                 <div class="col-lg-6 col-sm-6">
-                                    <div class="logo">
-                                        <h1>{{ Str::title(auth()->user()->store_name) }}</h1>
-                                    </div>
+                                    {{-- <div class="logo"> --}}
+                                        <img src="{{ asset('static/ads-logo.jpg') }}" style="width: 100px; border-radius:50%;" alt="ADS Home Appliances">
+                                        {{-- <h1>{{ str_replace('Ads', 'ADS' ,Str::title(auth()->user()->store_name)) }}</h1> --}}
+                                    {{-- </div> --}}
                                 </div>
                                 <div class="col-lg-6 col-sm-6">
                                     <div class="invoice">
@@ -46,7 +47,7 @@
                                 <div class="col-sm-6 mb-50">
                                     <div class="invoice-number">
                                         <h4 class="inv-title-1">
-                                            Invoice date:
+                                            Invoice date: 
                                         </h4>
                                         <p class="invo-addr-1">
                                             {{ $order->order_date }}
@@ -68,7 +69,9 @@
                                 <div class="col-sm-6 text-end mb-50">
                                     <h4 class="inv-title-1">Store</h4>
                                     <p class="inv-from-1">{{ Str::title($user->store_name) }}</p>
-                                    <p class="inv-from-1">{{ $user->store_phone }}</p>
+                                    <p class="inv-from-1">{{ $user->store_phone }} Office number </p>
+                                    <p class="inv-from-1"> 03016171829  What's App </p>
+                                    <p class="inv-from-1"> 03237876576  What's App </p>
                                     <p class="inv-from-1">{{ $user->store_email }}</p>
                                     <p class="inv-from-2">{{ $user->store_address }}</p>
                                 </div>
@@ -94,13 +97,13 @@
                                                     {{ $item->product->name }}
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    {{ Number::currency($item->unitcost, 'EUR') }}
+                                                    {{ Number::currency($item->unitcost, 'PKR') }}
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     {{ $item->quantity }}
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    {{ Number::currency($item->total, 'EUR') }}
+                                                    {{ Number::currency($item->total, 'PKR') }}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -113,7 +116,7 @@
                                             </td>
                                             <td class="align-middle text-center">
                                                 <strong>
-                                                    {{ Number::currency($order->sub_total, 'EUR') }}
+                                                    {{ Number::currency($order->sub_total, 'PKR') }}
                                                 </strong>
                                             </td>
                                         </tr>
@@ -123,7 +126,7 @@
                                             </td>
                                             <td class="align-middle text-center">
                                                 <strong>
-                                                    {{ Number::currency($order->vat, 'EUR') }}
+                                                    {{ Number::currency($order->vat, 'PKR') }}
                                                 </strong>
                                             </td>
                                         </tr>
@@ -133,7 +136,7 @@
                                             </td>
                                             <td class="align-middle text-center">
                                                 <strong>
-                                                    {{ Number::currency($order->total, 'EUR') }}
+                                                    {{ Number::currency($order->total, 'PKR') }}
                                                 </strong>
                                             </td>
                                         </tr>

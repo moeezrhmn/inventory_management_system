@@ -49,7 +49,7 @@
                 <div class="row row-cards">
 
                     <div class="col-12">
-                        <form action="{{ route('users.update', $user) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('put')
 
@@ -80,7 +80,7 @@
                     </div>
 
                     <div class="col-12">
-                        <form action="{{ route('users.updatePassword', $user) }}" method="POST">
+                        <form action="{{ route('users.updatePassword', $user->id) }}" method="POST">
                             @csrf
                             @method('put')
 
@@ -114,6 +114,38 @@
                             </div>
                         </form>
                     </div>
+                    @if(strtolower($user->name) != 'admin')
+                    <div class="col-12">
+                        <form action="{{ route('users.permissions.update', $user->id) }}" method="POST">
+                            @csrf
+                            @method('put')
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        {{ __('Change Permissions') }}
+                                    </h3>
+
+                                    <div class="row row-cards">
+                                        @foreach( $permissions as $permission )
+                                        <label >
+                                            <input class="form-check-input m-0" value="{{ $permission['id'] }}"  name="permissions[]" {{  $user->can($permission['name']) ? 'checked' : ''  }}  type="checkbox"  />
+                                            {{ $permission['name'] }}
+                                        </label>
+
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="card-footer text-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Save') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>

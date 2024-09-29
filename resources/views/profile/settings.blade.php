@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 d-none">
                 <div class="card mb-4">
                     <div class="card-header">
                         Two-Factor Authentication

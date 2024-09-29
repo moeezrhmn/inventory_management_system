@@ -11,6 +11,7 @@ use App\Models\OrderDetails;
 use App\Models\Product;
 use App\Models\User;
 use App\Mail\StockAlert;
+use App\Models\OrderPaymentInstallment;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -24,8 +25,8 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('user_id', auth()->id())->count();
-
+        $orders = Order::count();
+        // dd($orders);
         return view('orders.index', [
             'orders' => $orders
         ]);
@@ -33,9 +34,9 @@ class OrderController extends Controller
 
     public function create()
     {
-        $products = Product::where('user_id', auth()->id())->with(['category', 'unit'])->get();
+        $products = Product::with(['category', 'unit'])->get();
 
-        $customers = Customer::where('user_id', auth()->id())->get(['id', 'name']);
+        $customers = Customer::get(['id', 'name']);
 
         $carts = Cart::content();
 
@@ -67,6 +68,12 @@ class OrderController extends Controller
             'due' => (Cart::total() - $request->pay),
             'user_id' => auth()->id(),
             'uuid' => Str::uuid(),
+        ]);
+
+        // add installment
+        OrderPaymentInstallment::create([
+            'order_id' => $order['id'],
+            'payment' => $request->pay
         ]);
 
         // Create Order Details
@@ -165,7 +172,7 @@ class OrderController extends Controller
         $order->update([
             'order_status' => 2
         ]);
-        $orders = Order::where('user_id',auth()->id())->count();
+        $orders = Order::count();
 
         return redirect()
             ->route('orders.index', [
@@ -173,4 +180,27 @@ class OrderController extends Controller
             ])
             ->with('success', 'Order has been canceled!');
     }
+
+    public function order_installments_add(Request $request){
+
+        $order_id  = $request->order_id;
+        $payment = (float) $request->payment ?? 0;
+        $reference = $request->reference;
+        
+        OrderPaymentInstallment::create([
+            'order_id' => $order_id,
+            'payment' => $payment,
+            'reference' => $reference
+        ]);
+
+        $order = Order::find($order_id);
+        if($order){
+            $order_pay = $order->pay;
+            $order->pay = $order_pay + $payment;
+            $order->due = $order->due -  $payment;
+            $order->save();
+        }
+        return redirect()->back()->withSuccess('Order Payment has been added.');;
+    }
+
 }

@@ -164,8 +164,13 @@
                     </div>
                 </div>
 
-                <div class="card-footer text-end">
+                <div class="card-footer text-end d-flex align-items-center justify-content-end" style="gap: 10px;">
                     @if ($order->order_status === \App\Enums\OrderStatus::PENDING)
+
+                        <button data-bs-toggle="modal" data-bs-target="#addPaymentModal" class="btn btn-dark">
+                            {{ __('Add Payment') }}
+                        </button>
+
                         <form action="{{ route('orders.update', $order->uuid) }}" method="POST">
                             @method('put')
                             @csrf
@@ -175,10 +180,40 @@
                                 {{ __('Complete Order') }}
                             </button>
                         </form>
+                      
                     @endif
                 </div>
             </div>
 
         </div>
     </div>
+
+
+    <div class="modal" id="addPaymentModal" tabindex="-1">
+        <form action="{{ route('orders.installments.add') }}" method="post" class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Payment in Order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @csrf
+                <div class="mb-3" >
+                    <input type="number" placeholder="payment" class="form-control" name="payment" >
+                    <input type="hidden" name="order_id" value='{{ $order->id }}' >
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" name="reference" placeholder="Reference (Optional) "></textarea>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"> Add Payment </button>
+            </div>
+            </div>
+        </form>
+    </div>
+
+    
 @endsection

@@ -215,7 +215,7 @@
                                         </div>
                                         <div class="col">
                                             <div class="font-weight-medium">
-                                                {{ $orders }} Orders
+                                                {{ $orders }} Orders - {{ Number::currency($ordersAmountTotal , 'PKR') }}
                                             </div>
                                             <div class="text-muted">
                                                 {{ $todayOrders }} shipped
@@ -247,7 +247,7 @@
                                         </div>
                                         <div class="col">
                                             <div class="font-weight-medium">
-                                                {{ $purchases }} Purchases
+                                                {{ $purchases }} Purchases - {{ Number::currency($purchasesAmountTotal , 'PKR') }}
                                             </div>
                                             <div class="text-muted">
                                                 {{ $todayPurchases }} today
@@ -279,7 +279,7 @@
                                         </div>
                                         <div class="col">
                                             <div class="font-weight-medium">
-                                                {{ $quotations }} Quotations
+                                                {{ $quotations }} Quotations - {{ Number::currency($quotationsAmountTotal , 'PKR') }}
                                             </div>
                                             <div class="text-muted">
                                                 {{ $todayQuotations }} today
