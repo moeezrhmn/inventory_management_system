@@ -24,7 +24,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
-        Schema::defaultStringLength(191);
 
         Request::macro('breadcrumbs', function (){
             return new Breadcrumbs($this);
