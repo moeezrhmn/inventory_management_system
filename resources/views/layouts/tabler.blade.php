@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name') }}</title>
-
+    @vite("resources/css/app.css")
     <!-- CSS files -->
     <link href="{{ asset('dist/css/tabler.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('dist/css/tabler-flags.min.css') }}" rel="stylesheet" />
@@ -50,8 +50,7 @@
                 </button>
                 <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                     <a href="{{ url('/') }}">
-                        <img src="{{ asset('static/logo.svg') }}" width="110" height="32" alt="Tabler"
-                            class="navbar-brand-image">
+                        <img src="{{ asset('static/ads-logo.jpg') }}" style="height: 50px;" width="110" height="32" alt="Tabler" class="navbar-brand-image">
                     </a>
                 </h1>
                 <div class="navbar-nav flex-row order-md-last">
@@ -424,6 +423,12 @@
                                             <a class="dropdown-item" href="{{ route('customers.index') }}">
                                                 {{ __('Customers') }}
                                             </a>
+                                            <a class="dropdown-item" href="{{ route('labours.index') }}">
+                                                {{ __('Labours') }}
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('warehouses.index') }}">
+                                                {{ __('Warehouses') }}
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -461,6 +466,9 @@
                                             </a>
                                             <a class="dropdown-item" href="{{ route('units.index') }}">
                                                 {{ __('Units') }}
+                                            </a>
+                                            <a class="dropdown-item" href="{{ route('labours.work') }}">
+                                                {{ __('Labour Work') }}
                                             </a>
                                         </div>
                                     </div>
@@ -522,7 +530,113 @@
 
     <!-- Libs JS -->
     @stack('page-libraries')
+    <script>
+        $(document).ready(function () {
+            $(document).on("click", ".delete-labourwork", function (e) {
+                e.preventDefault();
+                var workId = $(this).data("id");
+                var deleteUrl = "/labour-works/" + workId;
+                if (confirm("Are you sure you want to delete this work?")) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: "DELETE",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                $("#labourWorkRow-" + workId).remove();
+                                alert(response.success);
+                            } else {
+                                alert("Something went wrong. Please try again.");
+                            }
+                        },
+                        error: function (xhr) {
+                            alert("Failed to delete. Please try again.");
+                        },
+                    });
+                }
+            });
+            $(document).on("click", ".delete-warehouse", function (e) {
+                e.preventDefault();
+                var warehouseId = $(this).data("id");
+                var deleteUrl = $(this).data("route"); // Corrected extra '='
+                
+                if (confirm("Are you sure you want to delete this warehouse?")) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: "DELETE",
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'), // CSRF token
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                $("#warehouse_row_" + warehouseId).remove();
+                                alert(response.success);
+                            } else {
+                                alert("Something went wrong. Please try again.");
+                            }
+                        },
+                        error: function (xhr) {
+                            alert("Failed to delete. Please try again.");
+                        },
+                    });
+                }
+            });
+            $(document).on("click", ".delete-w-detail", function (e) {
+                e.preventDefault();
+                var warehouseId = $(this).data("id");
+                var deleteUrl = $(this).data("route"); 
+                if (confirm("Are you sure you want to delete this warehouse detail?")) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: "DELETE",
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'), // CSRF token
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                $("#warehouse_item_" + warehouseId).remove();
+                                alert(response.success);
+                            } else {
+                                alert("Something went wrong. Please try again.");
+                            }
+                        },
+                        error: function (xhr) {
+                            alert("Failed to delete. Please try again.");
+                        },
+                    });
+                }
+            });
+
+            $('#search-invoice').on('keyup', function() {
+                var query = $(this).val();
+
+                $.ajax({
+                    url: "{{ route('labourwork.search') }}",
+                    type: 'GET',
+                    data: { query: query },
+                    success: function(response) {
+                        $('tbody').html(response.html);
+                    }
+                });
+            });
+            $('#search-detail').on('keyup', function() {
+                var query = $(this).val();
+
+                $.ajax({
+                    url: "{{ route('warehouse.search') }}",
+                    type: 'GET',
+                    data: { query: query },
+                    success: function(response) {
+                        $('tbody').html(response.html);
+                    }
+                });
+            });
+        });
+    </script>
     <!-- Tabler Core -->
+    <script src="{{ asset('assets/js/scripts.js') }}" defer></script>
     <script src="{{ asset('dist/js/tabler.min.js') }}" defer></script>
     <script src="{{ asset('dist/js/demo.min.js') }}" defer></script>
     {{-- - Page Scripts - --}}
