@@ -68,6 +68,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/warehouses', WarehouseController::class);
     Route::resource('/units', UnitController::class);
 
+    // WAREHOUSE ITEM TRANSACTIONS
+    Route::get('/warehouses-item-transactions/{warehouse_item_id}', [WarehouseController::class, 'warehouse_item_transactions'])->name('warehouse.transactions.view');
+    Route::post('/create-warehouses-item-transaction', [WarehouseController::class, 'create_warehouse_item_transaction'])->name('warehouse.transactions.create');
+    Route::delete('/delete-warehouses-item-transaction/{transaction_id}', [WarehouseController::class, 'delete_warehouse_item_transaction'])->name('warehouse.transactions.delete');
+
     Route::get('/labourwork', [LabourController::class, 'labourWork'])->name('labours.work');
     Route::post('/addwork', [LabourController::class, 'addWork'])->name('labours.addwork');
     Route::get('/labour-work/{id}/edit_work', [LabourController::class, 'edit_work'])->name('labourwork.edit');
