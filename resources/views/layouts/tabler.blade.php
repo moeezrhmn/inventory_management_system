@@ -35,6 +35,8 @@
     {{-- - Page Styles - --}}
     @stack('page-styles')
     @livewireStyles
+    <link rel="icon" href="{{ asset('static/ads-logo.jpg') }}" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{{ asset('static/ads-logo.jpg') }}" type="image/x-icon"/>
 </head>
 
 <body>

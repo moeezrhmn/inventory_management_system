@@ -22,4 +22,13 @@ class WarehouseItem extends Model
         return $this->belongsTo(Unit::class, 'unit_id');
     }
 
+    public function transactions()
+    {
+        return $this->hasMany(WarehouseItemTransaction::class, 'warehouse_item_id');
+    }
+
+    public function getTotalQuantityAttribute()
+    {
+        return $this->transactions()->sum('quantity');
+    }
 }

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Spatie\Permission\Models\Permission;
 use Str;
 
 class UserSeeder extends Seeder
@@ -19,7 +20,7 @@ class UserSeeder extends Seeder
                 'name' => 'Admin',
                 'email' => 'admin@admin.com',
                 'email_verified_at' => now(),
-                'password' => bcrypt('password'),
+                'password' => bcrypt('password123#*'),
                 'created_at' => now(),
                 'uuid' => Str::uuid(),
                 'photo' => 'admin.jpg'
@@ -47,5 +48,18 @@ class UserSeeder extends Seeder
         $users->each(function ($user) {
             User::insert($user);
         });
+
+        Permission::create(['name' => 'see users']);
+        Permission::create(['name' => 'store settings']);
+        Permission::create(['name' => 'change products']);
+        Permission::create(['name' => 'see single products']);
+
+        $admin = User::where('email', 'admin@admin.com')->first();
+
+        $admin->givePermissionTo('see users');
+        $admin->givePermissionTo('store settings');
+        $admin->givePermissionTo('change products');
+        $admin->givePermissionTo('see single products');
+
     }
 }

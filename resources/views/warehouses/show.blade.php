@@ -13,23 +13,22 @@
         <div>
             
             <div class="text-secondary flex justify-between w-full mb-2" style="display: flex">
-                <h3 style="flex:1;">{{ $warehouse['name'] }}'s Detail</h3>
+                <h3 style="flex:1;">{{ $warehouse['name'] }}'s Items</h3>
                 
                 <div class="ms-2 d-inline-block">
                     Search:<input type="text" id="search-detail" class="form-control form-control-sm" aria-label="Search invoice">
                 </div>
             </div>
             
-            <a href="{{ route('w_create', $warehouse['id']) }}" class="btn btn-primary mb-2">Add New</a>
+            <a href="{{ route('w_create', $warehouse['id']) }}" class="btn btn-primary mb-2">Add New Item </a>
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>#No</th>
+                        <th>Created</th>
                         <th>Item</th>
                         <th>Pieces</th>
                         <th>Unit</th>
                         <th>Measurements</th>
-                        <th>Created</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -43,6 +42,7 @@
             </div>
         </div>
     </div>
+
     
 </div>
 @endsection

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Warehouse;
 use App\Models\Unit;
 use App\Models\WarehouseItem;
+use App\Models\WarehouseItemTransaction;
 
 class WarehouseController extends Controller
 {
@@ -53,14 +54,12 @@ class WarehouseController extends Controller
     {
         $warehouse_record = $warehouse->toArray();
 
-        $warehouseData = $warehouse->items()->paginate(10);
-        
+        $warehouseData = $warehouse->items()->with(['unit', 'transactions'])->paginate(10);
+
         return view('warehouses.show', [
             "warehouse" => $warehouse_record,
             "warehouseData" => $warehouseData
         ]);
-
-
     }
 
     public function edit(Warehouse $warehouse)
@@ -162,5 +161,40 @@ class WarehouseController extends Controller
         return response()->json([
             'html' => view('warehouses.detail_table', compact('warehouseData'))->render()
         ]);
+    }
+
+
+    // WAREHOUSE ITEMS TRANSACTIONS
+    public function warehouse_item_transactions($warehouse_item_id){
+
+        $warehouseItem = WarehouseItem::find($warehouse_item_id);
+        if(!$warehouseItem){
+            return redirect('/warehouses');
+        }
+        $warehouseItemTransactions = WarehouseItemTransaction::where('warehouse_item_id', $warehouse_item_id)->paginate(10);
+
+        return view('warehouses.warehouse_item_transactions', compact('warehouseItemTransactions', 'warehouseItem'));
+    }
+    public function create_warehouse_item_transaction(Request $request){
+        
+        $validated = $request->validate([
+            'warehouse_item_id' => 'required',
+            'quantity' => 'required|integer',
+            'reference' => 'nullable|string' 
+        ]);
+
+        WarehouseItemTransaction::create($validated);
+
+        return redirect()->back()->with('success', 'Transaction created successfully.');
+    }
+
+    public function delete_warehouse_item_transaction($transaction_id){
+
+        $warehouseItemTransaction = WarehouseItemTransaction::find($transaction_id);
+        if(!$warehouseItemTransaction) return response()->json(['message' => 'warehouse item does not exist!'], 400);
+
+        $warehouseItemTransaction->delete();
+
+        return redirect()->back()->with('success', 'Warehouse item deleted successfully.');
     }
 }

@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('labourWork', function (Blueprint $table) {
+        Schema::create('labour_work', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('labour_id'); // Labour reference
-            $table->unsignedBigInteger('p_id'); // Item reference
-            $table->integer('pieces')->default(0); // Number of pieces, default is 1
-            $table->float('payment', 8, 2)->default(0); // Payment field, default 0, float with 2 decimal places
-            $table->text('description')->nullable(); // Optional description field
-            // Define foreign keys (optional, but good practice if you have related tables)
+            $table->unsignedBigInteger('labour_id'); 
+            $table->unsignedBigInteger('p_id'); 
+            $table->integer('pieces')->default(0); 
+            $table->float('payment', 8, 2)->default(0); 
+            $table->text('description')->nullable(); 
             $table->foreign('labour_id')->references('id')->on('labours')->onDelete('cascade');
             $table->foreign('p_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('labourWork');
+        Schema::dropIfExists('labour_work');
     }
 };
