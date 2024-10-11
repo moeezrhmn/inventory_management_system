@@ -112,10 +112,10 @@ class ProductController extends Controller
 
         $image = $product->product_image;
         if ($request->hasFile('product_image')) {
-
+            $filePath = public_path('storage/') . $product->product_image;
             // Delete Old Photo
-            if ($product->product_image) {
-                unlink(public_path('storage/') . $product->product_image);
+            if ($product->product_image &&  file_exists($filePath) ) {
+                unlink($filePath);
             }
             $image = $request->file('product_image')->store('products', 'public');
         }
@@ -148,8 +148,9 @@ class ProductController extends Controller
          */
         if ($product->product_image) {
             // check if image exists in our file system
-            if (file_exists(public_path('storage/') . $product->product_image)) {
-                unlink(public_path('storage/') . $product->product_image);
+            $filePath = public_path('storage/') . $product->product_image;
+            if (file_exists($filePath)) {
+                unlink($filePath);
             }
         }
 

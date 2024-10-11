@@ -7,6 +7,8 @@ use App\Http\Requests\Customer\StoreCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
 use Str;
 
+use function PHPUnit\Framework\fileExists;
+
 class CustomerController extends Controller
 {
     public function index()
@@ -28,6 +30,11 @@ class CustomerController extends Controller
         /**
          * Handle upload an image
          */
+        $existing_email = Customer::where('email', $request->email)->first();
+        if($existing_email){
+            return redirect()->back()->with('error', 'Email already exist!');
+        }
+
         $image = '';
         if ($request->hasFile('photo')) {
             $image = $request->file('photo')->store('customers', 'public');
@@ -81,8 +88,9 @@ class CustomerController extends Controller
          */
         $image = $customer->photo;
         if ($request->hasFile('photo')) {
-            if ($customer->photo) {
-                unlink(public_path('storage/') . $customer->photo);
+            $filePath = public_path('storage/') . $customer->photo;
+            if ($customer->photo and file_exists($filePath) ) {
+                unlink($filePath);
             }
             $image = $request->file('photo')->store('customers', 'public');
         }
@@ -108,8 +116,9 @@ class CustomerController extends Controller
     public function destroy($uuid)
     {
         $customer = Customer::where('uuid', $uuid)->firstOrFail();
-        if ($customer->photo) {
-            unlink(public_path('storage/') . $customer->photo);
+        $filePath = public_path('storage/') . $customer->photo;
+        if ($customer->photo and file_exists($filePath) ) {
+            unlink($filePath);
         }
 
         $customer->delete();

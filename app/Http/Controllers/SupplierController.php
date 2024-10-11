@@ -77,10 +77,10 @@ class SupplierController extends Controller
          */
         $image = $supplier->photo;
         if ($request->hasFile('photo')) {
-
+            $filePath = public_path('storage/') . $supplier->photo;
             // Delete Old Photo
-            if ($supplier->photo) {
-                unlink(public_path('storage/') . $supplier->photo);
+            if ($supplier->photo and file_exists($filePath)) {
+                unlink($filePath);
             }
 
             $image = $request->file('photo')->store("supliers", "public");
@@ -110,8 +110,9 @@ class SupplierController extends Controller
         /**
          * Delete photo if exists.
          */
-        if ($supplier->photo) {
-            unlink(public_path('storage/suppliers/') . $supplier->photo);
+        $filePath = public_path('storage/suppliers/') . $supplier->photo;
+        if ($supplier->photo and file_exists($filePath) ) {
+            unlink($filePath);
         }
 
         $supplier->delete();
