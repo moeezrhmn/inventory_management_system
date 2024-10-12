@@ -9,7 +9,7 @@
                         Overview
                     </div>
                     <h2 class="page-title">
-                        Dashboard Testing
+                        Dashboard
                     </h2>
                 </div>
                 <!-- Page title actions -->
