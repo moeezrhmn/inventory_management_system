@@ -127,8 +127,10 @@
                             @endif
                             @if(auth()->user()->can('change products'))
                             <x-button.edit class="btn-icon" route="{{ route('products.edit', $product->uuid) }}" />
-                            <x-button.delete class="btn-icon" route="{{ route('products.destroy', $product->uuid) }}"
-                            onclick="return confirm('Are you sure to delete product {{ $product->name }} ?')" />
+                                @if(empty($product->name))
+                                    <x-button.delete class="btn-icon" route="{{ route('products.destroy', $product->uuid) }}"
+                                    onclick="return confirm('Are you sure to delete product {{ $product->name }} ?')" />
+                                @endif
                             @endif
                         </td>
                         @endif

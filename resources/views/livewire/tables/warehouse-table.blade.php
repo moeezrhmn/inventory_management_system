@@ -85,7 +85,7 @@
                     <td class="align-middle text-center" style="width: 15%">
                         <x-button.show class="btn-icon" route="{{ route('warehouses.show', $warehouse) }}" />
                         <x-button.edit class="btn-icon" route="{{ route('warehouses.edit', $warehouse) }}" />
-                        @if($warehouse->name)
+                        @if(empty($warehouse->name))
                             <button type="button" class="btn-icon delete-warehouse btn btn-primary btn-outline-danger btn-icon" 
                                 data-route="{{ route('warehouses.destroy', $warehouse['id']) }}" 
                                 data-id="{{ $warehouse['id'] }}">
