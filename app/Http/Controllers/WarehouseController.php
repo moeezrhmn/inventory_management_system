@@ -85,7 +85,7 @@ class WarehouseController extends Controller
     public function destroy(Warehouse $warehouse)
     {
         try {
-            $warehouse->delete();
+            // $warehouse->delete();
             return response()->json(['success' => 'Warehouse has been deleted!']);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Something went wrong.'], 500);
