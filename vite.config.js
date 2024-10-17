@@ -44,4 +44,9 @@ export default defineConfig({
             ]
         })
     ],
+    build: {
+        rollupOptions: {
+          external: ['laravel-datatables-vite']
+        }
+    }
 });
