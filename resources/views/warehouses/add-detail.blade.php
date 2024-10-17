@@ -54,7 +54,7 @@
                     <div class="flex w-full gap-2" style="display: flex;">
                         <div class="mb-3 flex-1 w-full">
                             <label for="name" class="form-label">Pieces</label>
-                            <input type="text" class="border border-[#FCFCFD] p-2 w-full" name="pieces">
+                            <input type="number" value="0" disabled class="border border-[#FCFCFD] p-2 w-full" name="pieces">
                         </div>
                         <div class="mb-3 flex-1 w-full">
                             <label for="name" class="form-label">Measurements</label>

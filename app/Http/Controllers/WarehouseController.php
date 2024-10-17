@@ -116,36 +116,31 @@ class WarehouseController extends Controller
     }
     public function wedit($id)
     {
-        $warehouseItem = WarehouseItem::findOrFail($id); // Find the item by ID
-        $units = Unit::all(); // Fetch all units for the select dropdown
-
+        $warehouseItem = WarehouseItem::findOrFail($id); 
+        $units = Unit::all(); 
         return view('warehouses.edit-table', compact('warehouseItem', 'units'));
     }
 
     public function wupdate(Request $request, $id)
     {
-        // Validate the incoming request data
-        $request->validate([
+
+        $validated = $request->validate([
             'item_name' => 'required|string|max:255',
-            'unit_id' => 'required|exists:units,id', // Ensure the unit ID exists in the units table
-            'pieces' => 'required|integer',
-            'measurements' => 'required|numeric',
+            'unit_id' => 'required|exists:units,id', 
+            'pieces' => 'nullable',
+            'measurements' => 'required',
         ]);
-
-        // Find the warehouse item
+        
         $warehouseItem = WarehouseItem::findOrFail($id);
+        // $warehouseItem->update([
+        //     'item_name' => $request->item_name,
+        //     'pieces' => $request->pieces,
+        //     'unit_id' => $request->unit_id,
+        //     'measurements' => $request->measurements,
+        // ]);
+        $warehouseItem->update($validated);
 
-        // Update the warehouse item with new data
-        $warehouseItem->update([
-            'item_name' => $request->item_name,
-            'pieces' => $request->pieces,
-            'unit_id' => $request->unit_id,
-            'measurements' => $request->measurements,
-        ]);
-
-        // Redirect back with a success message
-        return redirect()->route('warehouses.show', $warehouseItem->warehouse_id) // Replace with the route to show warehouse details
-            ->with('success', 'Item updated successfully!');
+        return redirect()->route('warehouses.show', $warehouseItem->warehouse_id) ->with('success', 'Item updated successfully!');
     }
     public function wdestroy($id)
     {
