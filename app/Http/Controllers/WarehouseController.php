@@ -100,7 +100,8 @@ class WarehouseController extends Controller
     function wstore(Request $request)
     {
         $request->validate([
-            'pieces' => 'required|integer',
+            'item_name' => 'required|string|max:255',
+            'pieces' => 'nullable',
         ]);
 
         WarehouseItem::create([
