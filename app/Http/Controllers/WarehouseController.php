@@ -107,7 +107,7 @@ class WarehouseController extends Controller
         WarehouseItem::create([
             'warehouse_id' => $request->warehouse_id,
             'item_name' => $request->item,
-            'pieces' => $request->pieces,
+            'pieces' => 0,
             'unit_id' => $request->unit_id,
             'measurements' => $request->measurements,
         ]);
