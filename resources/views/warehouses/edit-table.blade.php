@@ -47,7 +47,7 @@
                     </div>
                     <div class="mb-3 flex-1 w-full">
                         <label for="pieces" class="form-label">Pieces</label>
-                        <input type="number" disabled class="border border-[#FCFCFD] p-2 w-full" name="pieces" value="{{ $warehouseItem->pieces }}" required>
+                        <input type="number" disabled class="border border-[#FCFCFD] p-2 w-full" name="pieces" value="{{ $itemStock }}" required>
                     </div>
                     <div class="mb-3 flex-1 w-full">
                         <label for="measurements" class="form-label">Measurements</label>

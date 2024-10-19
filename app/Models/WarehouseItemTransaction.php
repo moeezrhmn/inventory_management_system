@@ -15,7 +15,10 @@ class WarehouseItemTransaction extends Model
         'reference',
     ];
 
-    public static function get_stock(){
+    public static function get_stock($warehouse_item_id = null){
+        if ($warehouse_item_id) {
+            return self::where('warehouse_item_id', $warehouse_item_id)->sum('quantity');
+        }
         return self::sum('quantity');
     }
 }

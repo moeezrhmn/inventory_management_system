@@ -117,8 +117,9 @@ class WarehouseController extends Controller
     public function wedit($id)
     {
         $warehouseItem = WarehouseItem::findOrFail($id); 
+        $itemStock = WarehouseItemTransaction::get_stock($warehouseItem->id);
         $units = Unit::all(); 
-        return view('warehouses.edit-table', compact('warehouseItem', 'units'));
+        return view('warehouses.edit-table', compact('warehouseItem', 'units', 'itemStock'));
     }
 
     public function wupdate(Request $request, $id)
