@@ -309,7 +309,7 @@
                                     <tr>
                                         <td>  <a href="/products/{{ $product->uuid }}">{{$product->name}} </a>  </td>
                                         <td> {{$product->total_quantity}} </td>
-                                        <td> {{ number_format($product->percentage, '2')}} </td>
+                                        <td> {{ number_format($product->percentage, '2')}}% </td>
                                         
                                     </tr>
                                 @endforeach

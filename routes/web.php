@@ -151,17 +151,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/quotations/delete/{quotation}', [QuotationController::class, 'destroy'])->name('quotations.delete');
 
     // Route User
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/users/show/{user_id}', [UserController::class, 'show'])->name('users.show');
-    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::get('/users/edit/{user_id}', [UserController::class, 'edit'])->name('users.edit');
-    
-    Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
-    Route::put('/users/update/{user_id}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/users/destroy/{user_id}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::group(['middleware' => ['permission:see users']], function() {
 
-    // Route Permission 
-    Route::put('/users/permissions/update/{user_id}', [UserController::class, 'users_permissions_update'])->name('users.permissions.update');
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/show/{user_id}', [UserController::class, 'show'])->name('users.show');
+        Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+        Route::get('/users/edit/{user_id}', [UserController::class, 'edit'])->name('users.edit');
+        
+        Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
+        Route::put('/users/update/{user_id}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/destroy/{user_id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+        // Route Permission 
+        Route::put('/users/permissions/update/{user_id}', [UserController::class, 'users_permissions_update'])->name('users.permissions.update');
+    });
 });
 
 

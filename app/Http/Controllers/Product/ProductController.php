@@ -146,7 +146,7 @@ class ProductController extends Controller
         /**
          * Delete photo if exists.
          */
-        return redirect()->back();
+        // return redirect()->back();
         if ($product->product_image) {
             // check if image exists in our file system
             $filePath = public_path('storage/') . $product->product_image;
