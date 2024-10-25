@@ -17,6 +17,7 @@ use App\Http\Controllers\Purchase\PurchaseController;
 use App\Http\Controllers\Quotation\QuotationController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\LabourController;
+use App\Http\Controllers\StatementsController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WarehouseController;
@@ -164,6 +165,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Route Permission 
         Route::put('/users/permissions/update/{user_id}', [UserController::class, 'users_permissions_update'])->name('users.permissions.update');
+    });
+
+    // Statements Route
+    Route::group(['middleware' => ['permission:see users']], function (){
+        Route::get('/statements',[StatementsController::class, 'index'])->name('statements.index');
+        Route::post('/statements/report-pdf',[StatementsController::class, 'report_pdf'])->name('statements.report_pdf');
     });
 });
 
