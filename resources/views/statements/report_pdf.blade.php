@@ -52,8 +52,8 @@
                             @foreach($order['details'] as $item)
                             <tr>
                                 <td>{{ $item['product']['name'] }}</td>
-                                <td>{{ $item['unitcost'] }}</td>
                                 <td>{{ $item['quantity'] }}</td>
+                                <td>{{ $item['unitcost'] }}</td>
                                 <td>{{ $item['quantity'] * $item['unitcost'] }}</td>
                             </tr>
                             @endforeach
