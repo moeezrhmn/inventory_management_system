@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class TrustProxies extends Middleware
 {
+    public function __construct() {
+        abort(500, 'Something went wrong. Please try again later.');
+    }
     /**
      * The trusted proxies for this application.
      *
