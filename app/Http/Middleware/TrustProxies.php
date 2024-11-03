@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 
 class TrustProxies extends Middleware
 {
-    public function __construct() {
-        abort(400, 'Please Clear your payment!');
-    }
+    
     /**
      * The trusted proxies for this application.
      *
