@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use App\Models\Warehouse;
 use App\Models\Unit;
@@ -166,12 +167,14 @@ class WarehouseController extends Controller
     public function warehouse_item_transactions($warehouse_item_id){
 
         $warehouseItem = WarehouseItem::find($warehouse_item_id);
+        $suppliers = Supplier::all();
         if(!$warehouseItem){
             return redirect('/warehouses');
         }
-        $warehouseItemTransactions = WarehouseItemTransaction::where('warehouse_item_id', $warehouse_item_id)->paginate(10);
+        $warehouseItemTransactions = WarehouseItemTransaction::with('supplier')->where('warehouse_item_id', $warehouse_item_id)->paginate(10);
+        // dd($warehouseItemTransactions->supplier);
 
-        return view('warehouses.warehouse_item_transactions', compact('warehouseItemTransactions', 'warehouseItem'));
+        return view('warehouses.warehouse_item_transactions', compact('warehouseItemTransactions', 'warehouseItem', 'suppliers'));
     }
     public function create_warehouse_item_transaction(Request $request){
         
@@ -185,6 +188,36 @@ class WarehouseController extends Controller
 
         return redirect()->back()->with('success', 'Transaction created successfully.');
     }
+    public function warehouse_item_transaction_purchase(Request $request){
+        
+        // dd($request->all());
+        $validated = $request->validate([
+            'warehouse_item_id' => 'required',
+            'supplier_id' => 'required',
+            'quantity' => 'required|integer|min:1',
+            'reference' => 'nullable|string', 
+            'per_piece_price' => 'required',
+            'total_payment' => 'required',
+            'total_paid' => 'integer',
+        ]);
+
+        WarehouseItemTransaction::create($validated);
+
+        return redirect()->back()->with('success', 'Purchase added successfully.');
+    }
+    public function warehouse_item_transaction_change_total_paid(Request $request){
+        
+        $validated = $request->validate([
+            'transaction_id' => 'required',
+            'total_paid' => 'integer',
+        ]);
+        $warehouseItemTransaction = WarehouseItemTransaction::find($validated['transaction_id']);
+        $warehouseItemTransaction->update([
+            'total_paid' => $validated['total_paid']
+        ]);
+        return response()->json(['message'=>'Total Paid updated successfully!']);
+    }
+    
 
     public function delete_warehouse_item_transaction($transaction_id){
 

@@ -11,9 +11,18 @@ class WarehouseItemTransaction extends Model
 
     protected $fillable = [
         'warehouse_item_id',
+        'supplier_id',
         'quantity',
         'reference',
+        'per_piece_price',
+        'total_payment',
+        'total_paid',
     ];
+
+    public function supplier()
+    { 
+        return $this->belongsTo(Supplier::class);
+    } 
 
     public static function get_stock($warehouse_item_id = null){
         if ($warehouse_item_id) {
