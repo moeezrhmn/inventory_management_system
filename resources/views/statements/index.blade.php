@@ -26,9 +26,9 @@
         </div>
         @endif
         <!-- Report work -->
-        <div class="row card">
+        <div class="row card mb-3 ">
             <div class="card-body">
-
+                <h2> Order's Report </h2>
                 <form action="{{ route('statements.report_pdf') }}" class="d-flex align-items-end justify-content-between " method="post" >
                     @csrf
                     <div>
@@ -49,6 +49,38 @@
                     <div>
                         <label for="endDate">End Date:</label>
                         <input class="form-control" type="date" id="endDate" name="end_date" >
+                    </div>
+
+                    <button class="btn btn-primary"  type="submit">Show Report</button>
+                </form>
+
+            </div>
+        </div>
+   
+        <!-- Warehouse Item Purchase work -->
+        <div class="row card mb-3 ">
+            <div class="card-body">
+                <h2> Warehouse Item Purchase Report </h2>
+                <form action="{{ route('statements.warehouse_item_purchase_pdf') }}" class="d-flex align-items-end justify-content-between " method="post" >
+                    @csrf
+                    <div>
+                        <label for="supplier">Select Supllier:</label>
+                        <select name="supplier_id" class="form-control"  id="supplier" >
+                            <option value="">Select</option>
+                            @foreach($suppliers as $supplier)
+                            <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="suppstartDate">Start Date:</label>
+                        <input class="form-control" type="date" id="suppstartDate" name="start_date"  >
+                    </div>
+
+                    <div>
+                        <label for="suppendDate">End Date:</label>
+                        <input class="form-control" type="date" id="suppendDate" name="end_date" >
                     </div>
 
                     <button class="btn btn-primary"  type="submit">Show Report</button>

@@ -176,6 +176,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(['middleware' => ['permission:see users']], function (){
         Route::get('/statements',[StatementsController::class, 'index'])->name('statements.index');
         Route::post('/statements/report-pdf',[StatementsController::class, 'report_pdf'])->name('statements.report_pdf');
+        Route::post('/statements/warehouse-item_purchase-pdf',[StatementsController::class, 'warehouse_item_purchase_pdf'])->name('statements.warehouse_item_purchase_pdf');
     });
 });
 

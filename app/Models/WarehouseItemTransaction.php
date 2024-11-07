@@ -23,6 +23,11 @@ class WarehouseItemTransaction extends Model
     { 
         return $this->belongsTo(Supplier::class);
     } 
+    public function warehouse_item()
+    { 
+        return $this->belongsTo(WarehouseItem::class)->with('unit');
+    } 
+
 
     public static function get_stock($warehouse_item_id = null){
         if ($warehouse_item_id) {

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Unit;
+
 if (!function_exists('settings')) {
     function settings() {
         $settings = cache()->remember('settings', 24*60, function () {
