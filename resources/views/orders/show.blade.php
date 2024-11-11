@@ -165,12 +165,22 @@
                 </div>
 
                 <div class="card-footer text-end d-flex align-items-center justify-content-end" style="gap: 10px;">
-                    @if ($order->order_status === \App\Enums\OrderStatus::PENDING)
+                    @if ($order->order_status === \App\Enums\OrderStatus::PENDING or $order->order_status === \App\Enums\OrderStatus::DELIVERED)
 
                         <button data-bs-toggle="modal" data-bs-target="#addPaymentModal" class="btn btn-dark">
                             {{ __('Add Payment') }}
                         </button>
+                        @if ($order->order_status != \App\Enums\OrderStatus::DELIVERED)
+                            <form action="{{ route('orders.delivered', $order->uuid) }}" method="POST">
+                                @method('put')
+                                @csrf
 
+                                <button type="submit" class="btn btn-warning"
+                                    onclick="return confirm('Are you sure you want to deliver this order?')">
+                                    {{ __('Deliver Order') }}
+                                </button>
+                            </form>
+                        @endif
                         <form action="{{ route('orders.update', $order->uuid) }}" method="POST">
                             @method('put')
                             @csrf

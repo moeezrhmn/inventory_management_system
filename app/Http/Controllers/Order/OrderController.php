@@ -113,6 +113,41 @@ class OrderController extends Controller
         $order = Order::where('uuid', $uuid)->firstOrFail();
         // TODO refactoring
         // Reduce the stock
+        // $products = OrderDetails::where('order_id', $order->id)->get();
+
+        // $stockAlertProducts = [];
+
+        // foreach ($products as $product) {
+        //     $productEntity = Product::where('id', $product->product_id)->first();
+        //     $newQty = $productEntity->quantity - $product->quantity;
+        //     if ($newQty < $productEntity->quantity_alert) {
+        //         $stockAlertProducts[] = $productEntity;
+        //     }
+        //     $productEntity->update(['quantity' => $newQty]);
+        // }
+
+        // if (count($stockAlertProducts) > 0) {
+        //     $listAdmin = [];
+        //     foreach (User::all('email') as $admin) {
+        //         $listAdmin [] = $admin->email;
+        //     }
+        //     Mail::to($listAdmin)->send(new StockAlert($stockAlertProducts));
+        // }
+        $order->update([
+            'order_status' => OrderStatus::COMPLETE,
+            'due' => '0',
+            'pay' => $order->total
+        ]);
+
+        return redirect()
+            ->route('orders.complete')
+            ->with('success', 'Order has been completed!');
+    }
+    public function delivered_order($uuid, Request $request)
+    {
+        $order = Order::where('uuid', $uuid)->firstOrFail();
+        // TODO refactoring
+        // Reduce the stock
         $products = OrderDetails::where('order_id', $order->id)->get();
 
         $stockAlertProducts = [];
@@ -134,14 +169,12 @@ class OrderController extends Controller
             Mail::to($listAdmin)->send(new StockAlert($stockAlertProducts));
         }
         $order->update([
-            'order_status' => OrderStatus::COMPLETE,
-            'due' => '0',
-            'pay' => $order->total
+            'order_status' => OrderStatus::DELIVERED,
         ]);
 
         return redirect()
-            ->route('orders.complete')
-            ->with('success', 'Order has been completed!');
+            ->route('orders.pending')
+            ->with('success', 'Order has been delivered!');
     }
 
     public function destroy($uuid)

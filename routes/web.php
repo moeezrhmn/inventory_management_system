@@ -121,6 +121,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // SHOW ORDER
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::put('/orders/update/{order}', [OrderController::class, 'update'])->name('orders.update');
+    Route::put('/orders/delivered_order/{order}', [OrderController::class, 'delivered_order'])->name('orders.delivered');
     Route::delete('/orders/cancel/{order}', [OrderController::class, 'cancel'])->name('orders.cancel');
 
     // DUES

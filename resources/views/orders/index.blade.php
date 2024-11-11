@@ -41,7 +41,7 @@
                             <x-table.td>{{ $order->payment_type }}</x-table.td>
                             <x-table.td>{{ Number::currency($order->total, 'PKR') }}</x-table.td>
                             <x-table.td>
-                                <x-badge class="{{ $order->order_status === 'complete' ? 'bg-green' : 'bg-orange' }}">
+                                <x-badge class="{{ $order->order_status === 'complete' ? 'bg-green' : ($order->order_status == 'delivered' ? 'status-yellow' : 'bg-orange') }}">
                                     {{ $order->order_status }}
                                 </x-badge>
                             </x-table.td>

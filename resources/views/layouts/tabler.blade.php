@@ -320,7 +320,7 @@
                                                 {{ __('Completed') }}
                                             </a>
                                             <a class="dropdown-item" href="{{ route('orders.pending') }}">
-                                                {{ __('Pending') }}
+                                                {{ __('Pending & Delivered ') }}
                                             </a>
                                             <a class="dropdown-item" href="{{ route('due.index') }}">
                                                 {{ __('Due') }}
