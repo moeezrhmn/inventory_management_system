@@ -17,6 +17,7 @@ class WarehouseItemTransaction extends Model
         'per_piece_price',
         'total_payment',
         'total_paid',
+        'payments_record'
     ];
 
     public function supplier()

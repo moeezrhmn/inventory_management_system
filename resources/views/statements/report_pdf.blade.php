@@ -115,12 +115,12 @@
                     <td colspan="2"> {{ number_format($grand_total, '2') }} </td>
                 </tr>
                 <tr>
-                    <th colspan="2"> Total Pending</th>
-                    <td colspan="2"> {{ number_format($pending_total, '2') }} </td>
-                </tr>
-                <tr>
                     <th colspan="2"> Total Paid</th>
                     <td colspan="2"> {{ number_format($paid_total, '2') }} </td>
+                </tr>
+                <tr>
+                    <th colspan="2"> Total Pending</th>
+                    <td colspan="2"> {{ number_format($pending_total, '2') }} </td>
                 </tr>
             </tfoot>
         </tbody>

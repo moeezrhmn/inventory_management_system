@@ -77,6 +77,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/warehouses-item-transaction/change-total-paid', [WarehouseController::class, 'warehouse_item_transaction_change_total_paid'])->name('warehouse.transactions.change_total_paid');
 
+    Route::post('/warehouses-item-transaction/add-payment', [WarehouseController::class, 'warehouse_item_transaction_add_payment'])->name('warehouse.transactions.add_payment');
+
+    Route::get('/warehouses-item-transaction/get-payments/', [WarehouseController::class, 'warehouse_item_transaction_get_payments'])->name('warehouse.transactions.get_payments');
+
     Route::delete('/delete-warehouses-item-transaction/{transaction_id}', [WarehouseController::class, 'delete_warehouse_item_transaction'])->name('warehouse.transactions.delete');
 
     Route::get('/labourwork', [LabourController::class, 'labourWork'])->name('labours.work');

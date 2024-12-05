@@ -217,7 +217,50 @@ class WarehouseController extends Controller
         ]);
         return response()->json(['message'=>'Total Paid updated successfully!']);
     }
+    public function warehouse_item_transaction_add_payment(Request $request){
+        
+        $validated = $request->validate([
+            'transaction_id' => 'required',
+            'amount' => 'required|numeric|',
+            'date' => 'required|date',
+            'reference' => 'nullable|string',
+        ]);
     
+        $warehouseItemTransaction = WarehouseItemTransaction::find($validated['transaction_id']);
+        if (!$warehouseItemTransaction) {
+            return redirect()->back()->withErrors('Transaction not found!');
+        }
+    
+        $payments_record = json_decode($warehouseItemTransaction->payments_record, true) ?? [];
+        $new_payment = [
+            'amount' => $validated['amount'],
+            'date' => $validated['date'],
+            'reference' => $validated['reference'] ?? '',
+        ];
+        $payments_record[] = $new_payment; 
+    
+        $warehouseItemTransaction->update([
+            'payments_record' => json_encode($payments_record),
+        ]);
+    
+        // Calculate total_paid
+        $total_paid = array_reduce($payments_record, function ($carry, $record) {
+            return $carry + (float) ($record['amount'] ?? 0);
+        }, 0);
+    
+        $warehouseItemTransaction->update([
+            'total_paid' => $total_paid,
+        ]);
+    
+        return redirect()->back()->with('success', 'Payment added successfully!');
+    }
+    
+    public function warehouse_item_transaction_get_payments(Request $request){
+        $id = $request->transaction_id;
+        $warehouseItemTransaction = WarehouseItemTransaction::find($id);
+        $payments_record = json_decode($warehouseItemTransaction->payments_record, true);
+        return response()->json(['payments_record'=>$payments_record]);
+    }
 
     public function delete_warehouse_item_transaction($transaction_id){
 

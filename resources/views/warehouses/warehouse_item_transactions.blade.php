@@ -53,7 +53,7 @@
                     <tr>
                         <td> {{ \Carbon\Carbon::parse($transaction['created_at'])->format('d M Y')  }} </td>
                         <td>
-                            {{ $transaction->supplier->name ?? 'NA' }} 
+                            {{ $transaction->supplier->name ?? 'NA' }}
                             <div>
                                 <small>
                                     {{ $transaction->supplier->phone ?? '' }}
@@ -65,12 +65,17 @@
                         <td> {{$transaction['total_payment'] ?? 'NA'  }} </td>
                         <td>
                             {{$transaction['total_paid'] }}
-                            @if($transaction->supplier)
-                            <a href="javascript:void(0)" class="change-paid-amount" data-id="{{ $transaction->id }}" data-paid="{{$transaction['total_paid']}}" data-max-paid="{{ $transaction->total_payment }}">change</a>
-                            @endif
+                            @if($transaction['supplier'] )
+                                <button type="button" class="btn add_payment_btn btn-sm btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#addPaymentModal"
+                                data-id="{{ $transaction->id }}"
+                                >
+                                +
+                                </button>
+                                @endif
                         </td>
                         <td> {{$transaction['reference'] }} </td>
-                        <td>
+                        <td class="d-flex gap-2">
                             <form onsubmit="confirm('Do your really want to delete?') ? true : event.preventDefault()" action="{{ route('warehouse.transactions.delete', $transaction['id']) }}" method="post">
                                 @csrf
                                 @method('delete')
@@ -78,6 +83,9 @@
                                     <x-icon.trash />
                                 </button>
                             </form>
+
+                            <x-button.show data-bs-toggle="modal"
+                            data-bs-target="#viewTransactionsModal" class="btn-icon show_transaction_btn "  route='javascript:void(0)'  data-id="{{ $transaction['id']  }}" />
                         </td>
                     </tr>
 
@@ -172,6 +180,71 @@
         </div>
     </div>
 
+
+
+    <div class="modal" id="addPaymentModal" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <form action="{{ route('warehouse.transactions.add_payment')}}" method="post" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        @csrf
+                        <div class="mb-3">
+                            <label>Amount:</label>
+                            <input type="number" required name="amount" class="form-control">
+                            <input type="hidden" name="transaction_id">
+                        </div>
+                        <div class="mb-3">
+                            <label>Date:</label>
+                            <input type="datetime-local" required name="date" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label>Reference:</label>
+                            <textarea name="reference" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" >Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="viewTransactionsModal" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Reference</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         $(document).ready(function() {
 
@@ -184,49 +257,46 @@
                 $('#add_purchase_modal input[name=total_paid]').attr('max', totalPayment.toFixed(2));
             })
 
-            $('.change-paid-amount').on('click', function() {
+            $('.add_payment_btn').on('click', function() {
                 let transaction_id = $(this).data('id')
-                let max_paid = $(this).data('max-paid')
-                let paid = $(this).data('paid')
 
-                console.log(transaction_id)
-                console.log(max_paid)
-                console.log(paid)
+                $('#addPaymentModal').find('input[name=transaction_id]').val(transaction_id)
 
-                let total_paid;
-
-                do {
-                    total_paid = prompt(`Please enter total paid amount! Max can be (${max_paid})`, paid);
-
-                    if (!total_paid) {
-                        alert('Amount cannot be empty.');
-                    } else if (isNaN(total_paid)) {
-                        alert('Please enter a numeric value.');
-                    } else if (Number(total_paid) > max_paid) {
-                        alert('Max paid amount can only be ' + max_paid);
-                    } else {
-                        break;
-                    }
-                } while (true);
-
-                total_paid = Number(total_paid); 
-                console.log("Validated Total Paid:", total_paid);
-
+            })
+            $('.show_transaction_btn').on('click', function() {
+                let transaction_id = $(this).data('id')
+                $('#viewTransactionsModal').find('tbody').html('Loading...')
+                let table_rows = ''
                 $.ajax({
-                    url:'{{ route("warehouse.transactions.change_total_paid") }}',
-                    type:'POST',
-                    headers: {
-                        'X-CSRF_TOKEN' : '{{ csrf_token() }}'
-                    },
-                    data: {
-                        transaction_id, total_paid
-                    },
+                    url: '{{ route("warehouse.transactions.get_payments") }}?transaction_id='+transaction_id,
+                    type: 'GET',
+                    // headers: {
+                    //     'X-CSRF_TOKEN': '{{ csrf_token() }}'
+                    // },
+                    // data: {
+                    //     transaction_id,
+                    //     total_paid
+                    // },
                     success: (res) => {
-                        console.log(res)
-                        if(res?.message){
-                            alert(res?.message);
-                            window.location.reload();
+                        // console.log(res)
+                        if (!res?.payments_record){
+                            table_rows = `
+                            <h3> No payment found! </h3>
+                            `
+                        }else{
+                            res.payments_record.forEach((record, index) => {
+                                table_rows += `
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td>${record['amount']}</td>
+                                        <td>${new Date(record['date']).toLocaleString()}</td>
+                                        <td>${record['reference']}</td>
+                                    </tr>
+                                `;
+                            });
                         }
+                        $('#viewTransactionsModal').find('tbody').html(table_rows);
+
                     }
                 })
             })
