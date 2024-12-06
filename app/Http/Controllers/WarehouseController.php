@@ -207,7 +207,7 @@ class WarehouseController extends Controller
             'reference' =>  '',
         ];
         $payments_record[] = $new_payment; 
-        $validated['total_paid'] = $payments_record;
+        $validated['total_paid'] = json_encode($payments_record);
         WarehouseItemTransaction::create($validated);
 
         return redirect()->back()->with('success', 'Purchase added successfully.');
