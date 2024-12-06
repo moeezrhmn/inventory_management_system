@@ -200,7 +200,14 @@ class WarehouseController extends Controller
             'total_payment' => 'required',
             'total_paid' => 'integer',
         ]);
-
+        $payments_record = [];
+        $new_payment = [
+            'amount' => $validated['total_paid'],
+            'date' => now(),
+            'reference' =>  '',
+        ];
+        $payments_record[] = $new_payment; 
+        $validated['total_paid'] = $payments_record;
         WarehouseItemTransaction::create($validated);
 
         return redirect()->back()->with('success', 'Purchase added successfully.');
