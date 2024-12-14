@@ -41,6 +41,7 @@
                     $grand_total_payment += (float) $itemTransaction['total_payment'];
                     $grand_total_paid += (float) $itemTransaction['total_paid'];
                     $grand_total_pending += (float) $itemTransaction['total_payment'] - (float) $itemTransaction['total_paid'];
+                    $payments_record = json_decode($itemTransaction['payments_record'], true) ?? [];
                 @endphp
             <tr>
                 <td>{{ \Carbon\Carbon::parse($itemTransaction['created_at'])->format('Y-m-d') }}</td>
@@ -53,6 +54,18 @@
                     <div>
                         <small> Pending: {{ number_format((float) $itemTransaction['total_payment'] - (float) $itemTransaction['total_paid'])  }} </small>
                     </div>
+                    <table  cellspacing="0" cellpadding="3" width="100%">
+                        <tr>
+                            <th>Date</th>
+                            <th>Payment</th>
+                        </tr>
+                        @foreach($payments_record as $record)
+                            <tr>
+                                <td> {{ Carbon\Carbon::parse($record['date'])->format('y, M d  (h:m)') }} </td>
+                                <td> {{ $record['amount'] }} </td>
+                            </tr>
+                        @endforeach
+                    </table>
                 </td>
             </tr>
             @endforeach
